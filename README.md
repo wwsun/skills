@@ -1,6 +1,6 @@
-# Gemini CLI 技能库 (Agent Skills)
+# Agent Skills
 
-这是一个个人使用的技能库，存储了供 Gemini CLI 使用的自定义技能（Skills）。每个技能都包含一套专门的指令，用于扩展 AI 代理在特定领域（如项目分析、文档编写、Obsidian 增强等）的能力。
+这是一个个人使用的技能库，存储了供 Agent 使用的自定义技能（Skills）。每个技能都包含一套专门的指令，用于扩展 AI 代理在特定领域（如项目分析、文档编写、Obsidian 增强等）的能力。
 
 ## 技能索引
 
@@ -16,5 +16,8 @@
 | `obsidian-bases` | 创建和编辑 Obsidian Bases (.base) 文件（数据库视图）。 | [skills/obsidian-bases](skills/obsidian-bases) |
 | `obsidian-markdown` | 处理包含维基链接、嵌入、标注等语法的 Obsidian Markdown。 | [skills/obsidian-markdown](skills/obsidian-markdown) |
 
----
-*由 Gemini CLI 自动生成。*
+## 如何安装
+
+```bash
+npx skills add wwsun/skills
+```
