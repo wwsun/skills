@@ -8,7 +8,7 @@ description: >
   特别适合需要快速上手新项目、做代码审查或技术调研时使用。
 ---
 
-# Repository Explorer
+# Repo Explorer
 
 帮助用户在 10-15 分钟内建立对陌生代码库的系统性认知，生成一份导航地图式的项目报告。
 
