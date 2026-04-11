@@ -1,6 +1,3 @@
 node_modules
 package.json
 bun.lock
-.skill-lock.json
-
-skills/skill-creator
