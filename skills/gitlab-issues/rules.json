@@ -1,17 +1,24 @@
 {
   "assignees": {
-    "sunweiwei01": 999,
-    "shenxiaohan": 888
+    "alice": 999,
+    "bob": 888
   },
   "assignment_rules": [
     {
       "keywords": ["agent", "studio"],
-      "assignee": "sunweiwei01"
+      "assignee": "alice",
+      "labels": ["P1", "feature"]
     },
     {
       "keywords": ["template", "publish"],
-      "assignee": "shenxiaohan"
+      "assignee": "bob",
+      "labels": ["P1", "feature"]
+    },
+    {
+      "keywords": ["bug", "fix", "error"],
+      "labels": ["bugfix", "P0"]
     }
   ],
-  "stale_days": 14
+  "stale_days": 14,
+  "default_labels": ["P2", "feature"]
 }

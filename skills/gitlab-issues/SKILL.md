@@ -1,77 +1,55 @@
 ---
 name: gitlab-issues
-description: 整理 GitLab 指定仓库的 issues，支持设置优先级 (P0/P1/P2) 和类型 (bugfix/feature) 标签，自动指派开发者 (sunweiwei01/shenxiaohan)，并生成每日汇总报告。当用户提到“整理 GitLab issues”、“生成 GitLab 报告”、“指派 issue”或“GitLab 统计”时，务必使用此技能。即使仓库路径未明确，也应协助识别。
+description: 自动化整理 GitLab Issues。支持一键执行完整流程：自动为新增 Issue 打标 (tag) 和指派 (assign)，并生成包含新增、优先关注及分类统计的每日汇总报告。支持动态更新配置规则。
 ---
 
 # GitLab Issue Manager
 
-此技能旨在自动化整理 GitLab 仓库中的 Issues。它通过 Python 辅助脚本 `scripts/gitlab_api.py` 与 GitLab API 交互。
+此技能旨在自动化管理 GitLab 仓库中的 Issues。它通过 `scripts/gitlab_api.py` 与 GitLab API 交互，并根据 `rules.json` 执行逻辑。
 
 ## 核心功能
 
-1. **设置标签 (Labeling)**: 支持 `P0`, `P1`, `P2`, `bugfix`, `feature`。
-2. **自动指派 (Assignment)**:
-   - 默认逻辑存储在 `rules.json` 中。
-   - 包含 `agent`/`studio` 指派给 `sunweiwei01`，`template`/`publish` 指派给 `shenxiaohan`。
-   - **动态更新**: 如果用户提出新的指派要求，务必使用 `write_to_file` 工具更新 `rules.json` 以持久化这些偏好。
-3. **每日汇总报告 (Daily Report)**: 统计新 Issue、已关闭、高优先级和停滞 Issue 信息。
+1. **完整自动化流程 (Complete Workflow)**:
+   - **自动打标与指派**: 扫描无标签或无指派人的 Opened Issues。
+   - **多重匹配**: 若命中多个关键字，将叠加所有相关标签。
+   - **默认配置**: 若无关键字命中，自动应用默认标签 (如 `P2`, `feature`)。
+   - **自动汇总**: 处理完成后自动生成当日概况报告。
 
-## 配置与规则管理
-
-该技能使用 `rules.json` 管理用户映射和自动化规则：
-
-- `assignees`: 用户名到 GitLab ID 的映射。
-- `assignment_rules`: 包含 `keywords`（关键字列表）和 `assignee`（负责人用户名）的规则。
-
-当你收到类似“以后把所有的登录问题都指派给张三”的指令时：
-
-1. 更新 `assignees`（如果张三的 ID 已知）。
-2. 在 `assignment_rules` 中添加或修改规则。
-3. 使用 `write_to_file` 保存。
-
-## 准备工作
-
-确保环境中设置了以下变量：
-
-- `GITLAB_TOKEN`: GitLab 个人访问令牌 (PAT)。
-- `GITLAB_URL`: GitLab 实例地址。
-- `GITLAB_PROJECT_ID`: 项目路径 (例如 `tango/ai-agents/some-repo`)。
+2. **配置管理 (Dynamic Rules)**:
+   - 规则存储在 `rules.json` 中。
+   - 你可以通过聊天指令（如“以后把 A 分给 B”）要求 AI 更新该文件。
 
 ## 使用指南
 
-### 1. 生成汇总报告
+### 1. 执行完整整理流程 (推荐)
+当你要求“整理仓库”、“执行今日任务”或“看看昨天的 issue”时：
+- 运行命令: `python scripts/gitlab_api.py workflow`
+- **处理逻辑**:
+  - `agent`/`studio` 相关 -> 指派给 `sunweiwei01`, 打标 `P1`, `feature`。
+  - `template`/`publish` 相关 -> 指派给 `shenxiaohan`, 打标 `P1`, `feature`。
+  - `bug`/`fix`/`error` 相关 -> 打标 `bugfix`, `P0`。
+- **输出报表**: 按照以下 Markdown 结构返回：
 
-当用户要求“汇总报告”或“Issue 概况”时：
+  # GitLab Issue 每日执行结果
+  > 已自动整理 N 个新增 Issue。
 
-- 运行命令: `python scripts/gitlab_api.py report`
-- 解析输出的 JSON，并按照以下结构转换成 Markdown 报表返回：
+  ## 📅 今日新增 (24h)
+  - [IID] [Title] (创建于: [Time])
 
-  # GitLab Issue 每日汇总录
-  - **新增 Issue**: [Count]
-  - **已关闭 Issue**: [Count]
-  - **高优先级 (P0/P1)**: [Count]
-  - **停滞 (14天未更新)**: [Count]
-  - **标签分类统计**: [Category Breakdown]
-
-  ## 高优先级待办
+  ## 🔥 建议优先关注 (P0/P1/Bugfix)
   - [IID] [Title] ([Labels])
 
-  ## 停滞提醒
-  - [IID] [Title] (最后更新: [Date])
+  ## 📊 待完成分类统计
+  - [Label Name]: [Count]
 
-### 2. 整理与指派 Issue
+### 2. 仅生成汇总报告
+- 运行命令: `python scripts/gitlab_api.py report`
 
-当用户要求“整理 issue”或指派新 issue 时：
-
-1. **识别开发者 ID**:
-   - 逻辑：`agent`/`studio` -> `sunweiwei01`, `template`/`publish` -> `shenxiaohan`。
-   - 如果需要，先获取用户 ID: `python scripts/gitlab_api.py user <username>`。
-2. **更新 Issue**:
-   - 命令模板: `python scripts/gitlab_api.py update <iid> <labels_comma_separated> <assignee_ids_comma_separated>`
-   - 示例: `python scripts/gitlab_api.py update 105 "P1,bugfix" "123"`
+### 3. 环境配置
+确保设置以下变量：
+- `GITLAB_TOKEN`: 个人访问令牌。
+- `GITLAB_PROJECT_ID`: 项目路径 (e.g., `tango/ai-agents/some-repo`)。
 
 ## 注意事项
-
-- **停滞定义**: 14天未更新。
-- **GitLab 版本**: 兼容 GitLab Community Edition 13.12.15 (使用 `/api/v4`)。
-- **权限**: 确保 `GITLAB_TOKEN` 有足够的读写权限。
+- 兼容 GitLab CE 13.12.15。
+- 逻辑更新：所有规则匹配采用“叠加”模式。
