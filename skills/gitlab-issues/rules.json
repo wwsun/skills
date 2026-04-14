@@ -1,0 +1,17 @@
+{
+  "assignees": {
+    "sunweiwei01": 999,
+    "shenxiaohan": 888
+  },
+  "assignment_rules": [
+    {
+      "keywords": ["agent", "studio"],
+      "assignee": "sunweiwei01"
+    },
+    {
+      "keywords": ["template", "publish"],
+      "assignee": "shenxiaohan"
+    }
+  ],
+  "stale_days": 14
+}

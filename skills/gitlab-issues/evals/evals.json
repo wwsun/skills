@@ -1,0 +1,19 @@
+{
+  "skill_name": "gitlab-issues",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "generate_report",
+      "prompt": "生成一份 GitLab 仓库 tango/ai-agents/campaign-ai-studio 的当日 Issue 概况报告。",
+      "expected_output": "包含统计量（新增、关闭、停滞等）和具体的高优先级/停滞列表的 Markdown 报表。",
+      "files": []
+    },
+    {
+      "id": 1,
+      "eval_name": "assign_and_label",
+      "prompt": "把 Issue #101 标记为 P0 和 feature，并指派给负责 studio 逻辑的小组长。",
+      "expected_output": "调用 update 命令设置标签 P0,feature 并指派给 sunweiwei01 (需要先查找 ID)。",
+      "files": []
+    }
+  ]
+}
