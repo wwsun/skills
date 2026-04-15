@@ -37,6 +37,9 @@ ARTIFACT=$(echo "$PROJECT_NAME" | tr -d '-' | tr '[:upper:]' '[:lower:]')
 NEW_PACKAGE="${GROUP_ID}.${ARTIFACT}"
 NEW_PACKAGE_PATH="${NEW_PACKAGE//.//}"
 
+# 展示名：连字符转空格后首字母大写，如 meeting-room -> Meeting Room
+DISPLAY_NAME=$(echo "$PROJECT_NAME" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print}')
+
 OLD_PACKAGE="com.music163.starter"
 OLD_PACKAGE_PATH="com/music163/starter"
 
@@ -51,6 +54,7 @@ echo "=============================="
 echo "  java-web-scaffold"
 echo "=============================="
 echo "  项目名称:  $PROJECT_NAME"
+echo "  显示名称:  $DISPLAY_NAME"
 echo "  包名:      $NEW_PACKAGE"
 echo "  数据库:    $DB_NAME"
 echo "  目标路径:  $PROJECT_DIR"
@@ -113,7 +117,7 @@ mv "$OLD_JAVA_PATH" "$NEW_JAVA_PATH"
 find "$PROJECT_DIR/backend/src/main/java" -type d -empty -delete 2>/dev/null || true
 
 # ---------- [4/7] 替换包名和项目标识 ----------
-echo "[4/7] 替换包名和项目标识..."
+echo "[4/7] 替换包名和项目标识（后端 + 前端）..."
 
 # Java 源码：替换包声明和 import
 find "$PROJECT_DIR/backend/src" -name "*.java" -exec \
@@ -135,16 +139,18 @@ fi
 sed -i '' "s|name: java-web-starter|name: ${PROJECT_NAME}|g" \
   "$PROJECT_DIR/backend/src/main/resources/application.yml"
 
-# application-dev.yml：数据库名、日志包名、Redis key prefix
+# application-dev.yml：数据库名、日志包名
 sed -i '' "s|starter_db|${DB_NAME}|g" \
   "$PROJECT_DIR/backend/src/main/resources/application-dev.yml"
 sed -i '' "s|${OLD_PACKAGE}: DEBUG|${NEW_PACKAGE}: DEBUG|g" \
   "$PROJECT_DIR/backend/src/main/resources/application-dev.yml"
-sed -i '' "s|key-prefix: \"starter:\"|key-prefix: \"${PROJECT_NAME}:\"|g" \
-  "$PROJECT_DIR/backend/src/main/resources/application-dev.yml"
 
-# application-prod.yml：数据库名
+# application-prod.yml：数据库名、日志包名、Redis key prefix
 sed -i '' "s|starter_db|${DB_NAME}|g" \
+  "$PROJECT_DIR/backend/src/main/resources/application-prod.yml"
+sed -i '' "s|${OLD_PACKAGE}: INFO|${NEW_PACKAGE}: INFO|g" \
+  "$PROJECT_DIR/backend/src/main/resources/application-prod.yml"
+sed -i '' "s|key-prefix: \"starter:\"|key-prefix: \"${PROJECT_NAME}:\"|g" \
   "$PROJECT_DIR/backend/src/main/resources/application-prod.yml"
 
 # docker-compose.yml：容器名、数据库名、网络名
@@ -165,6 +171,20 @@ sed -i '' "s|\"name\": \"frontend\"|\"name\": \"${PROJECT_NAME}\"|g" \
 # scripts/api.sh：token 缓存目录名
 sed -i '' "s|/tmp/.starter-api|/tmp/.${PROJECT_NAME}-api|g" \
   "$PROJECT_DIR/scripts/api.sh"
+
+# logback-spring.xml：应用名
+sed -i '' "s|value=\"starter\"|value=\"${PROJECT_NAME}\"|g" \
+  "$PROJECT_DIR/backend/src/main/resources/logback-spring.xml"
+
+# frontend/index.html：页面标题
+sed -i '' "s|<title>frontend</title>|<title>${PROJECT_NAME}</title>|g" \
+  "$PROJECT_DIR/frontend/index.html"
+
+# frontend/src/layouts/MainLayout.tsx：侧边栏名称、breadcrumb 项目名
+sed -i '' "s|WebStarter|${DISPLAY_NAME}|g" \
+  "$PROJECT_DIR/frontend/src/layouts/MainLayout.tsx"
+sed -i '' "s|starter-baseline|${PROJECT_NAME}|g" \
+  "$PROJECT_DIR/frontend/src/layouts/MainLayout.tsx"
 
 # ---------- [5/7] 清理 Claude 配置 ----------
 echo "[5/7] 更新 Claude 配置..."
