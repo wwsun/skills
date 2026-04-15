@@ -7,3 +7,7 @@ __pycache__
 skills/ask
 skills/git-ai-search
 skills/prompt-analysis
+
+# claude
+.claude/settings.local.json
+
