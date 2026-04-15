@@ -1,0 +1,25 @@
+skills/java-web-scaffold/scripts/scaffold.sh
+  bcf318ce9be4200a 40-42,57,120,142,148,151-153,175-188
+skills/java-web-scaffold/SKILL.md
+  bcf318ce9be4200a 30,49-52,69-70,82-85,91-93,115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "07e6c8fde7f7a4f01afabc658aedd07627252495",
+  "prompts": {
+    "bcf318ce9be4200a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bf79b400-63f3-4484-9b6a-4d4df643a2b5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "wwsun",
+      "messages": [],
+      "total_additions": 51,
+      "total_deletions": 17,
+      "accepted_lines": 50,
+      "overriden_lines": 0
+    }
+  }
+}
