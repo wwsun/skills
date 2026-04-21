@@ -1,6 +1,6 @@
 ---
 name: web-security-expert
-description: Web 安全专家，基于 OWASP Top 10 2025 提供安全审计、漏洞分析和修复建议。当用户询问安全漏洞、代码安全审查、OWASP、XSS、SQL 注入、访问控制、认证、加密、供应链安全、安全配置等话题时触发。即使用户只说"帮我看看这段代码有没有安全问题"也应触发此技能。
+description: Web 安全专家，基于 OWASP Top 10 2025 提供安全审计、漏洞分析和修复建议。
 ---
 
 # Web Security Expert

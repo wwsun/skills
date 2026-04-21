@@ -1,6 +1,6 @@
 ---
 name: java-web-scaffold
-description: 基于 java-web-starter 模板初始化全栈工程（Java 21 + Spring Boot 3 + React 19 + MySQL + Redis）。当用户需要快速搭建企业级 Web 项目、后台管理系统、初始化 Java 全栈脚手架、从 java-web-starter 创建新项目时使用。即使用户只说"新建一个 Java 项目"或"初始化一个后台系统"也应优先考虑本 skill。
+description: 基于 java-web-starter 模板初始化全栈工程（Java 21 + Spring Boot 3 + React 19 + MySQL + Redis）。当用户需要快速搭建企业级 Web 项目、后台管理系统、初始化 Java 全栈脚手架、从 java-web-starter 创建新项目时使用。
 ---
 
 # java-web-scaffold
