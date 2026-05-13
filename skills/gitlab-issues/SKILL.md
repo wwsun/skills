@@ -30,17 +30,14 @@ description: 自动化整理 GitLab Issues。支持一键执行完整流程：�
   - `bug`/`fix`/`error` 相关 -> 打标 `bugfix`, `P0`。
 - **输出报表**: 按照以下 Markdown 结构返回：
 
-  # GitLab Issue 每日执行结果
+  **GitLab Issue 每日执行结果**
   > 已自动整理 N 个新增 Issue。
 
-  ## 📅 今日新增 (24h)
+  **📅 今日新增 (24h)**
   - [IID] [Title] (创建于: [Time])
 
-  ## 🔥 建议优先关注 (P0/P1/Bugfix)
+  **🔥 建议优先关注 (P0/P1/Bugfix)**
   - [IID] [Title] ([Labels])
-
-  ## 📊 待完成分类统计
-  - [Label Name]: [Count]
 
 ### 2. 仅生成汇总报告
 - 运行命令: `python scripts/gitlab_api.py report`
