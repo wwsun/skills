@@ -82,6 +82,16 @@
       "pluginName": "example-skills",
       "installedAt": "2026-04-07T10:23:00.223Z",
       "updatedAt": "2026-04-07T10:23:00.223Z"
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "skillFolderHash": "784f0dbb7403b0f00324bce9a112f715342777a0daee7bbb7385f9c6f0a170ea",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-05-13T11:40:04.369Z",
+      "updatedAt": "2026-05-13T11:40:04.369Z"
     }
   },
   "dismissed": {
@@ -94,11 +104,14 @@
     "codex",
     "cursor",
     "deepagents",
+    "dexto",
     "firebender",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
     "opencode",
-    "warp"
+    "warp",
+    "claude-code",
+    "codemaker"
   ]
 }
